@@ -1,0 +1,50 @@
+version: "2.4"
+services:
+  obfs4-bridge:
+    platform: linux/arm/v6
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    container_name: tor
+    environment:
+      # Set required variables
+      - OR_PORT=65535
+      - PT_PORT=65534
+      - EMAIL=john.doe@duck.com
+      # If you want, you could change the nickname of your bridge
+      #NICKNAME=DockerObfs4Bridge
+      # If needed, activate additional variables processing
+      - OBFS4_ENABLE_ADDITIONAL_VARIABLES=1
+      # and define desired torrc entries prefixed with OBFS4V_
+      # For example:
+      # Disable IPv6
+      - OBFS4V_AddressDisableIPv6=1
+
+      # BandwidthRate with default value: "125 KBytes"
+      - BandwidthRate=${OBFS4V_BandwidthRate:-125 KBytes}
+      # BandwidthBurst with default value: "250 KBytes"
+      - BandwidthBurst=${OBFS4V_BandwidthBurst:-250 KBytes}
+      # AddressDisableIPv6 with default value: "0"
+      - AddressDisableIPv6=${OBFS4V_AddressDisableIPv6:-0}
+
+      # set the limit around 3 Mbit/s
+      # Maximum long-term bandwidth allowed
+      - OBFS4V_BandwidthRate="375000 Bytes"
+      # Short periods of traffic above BandwidthRate
+      - OBFS4V_BandwidthBurst="750000 Bytes"
+      # To specify an exit node, if you know what you're doing
+      # - OBFS4V_ExitNodes="{mc},{sg},{ro},{ch},{dk},{cl} StrictNodes 1"
+      # Never use these exit nodes
+      # - OBFS4V_ExcludeExitNodes="{us}"
+    env_file:
+      - .env
+    volumes:
+      - data:/var/lib/tor
+    ports:
+      - 65535:65535
+      - 65534:65534
+    restart: unless-stopped
+
+volumes:
+  data:
+    name: tor-datadir
