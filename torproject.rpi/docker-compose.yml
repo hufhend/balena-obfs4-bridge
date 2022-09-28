@@ -8,8 +8,8 @@ services:
     container_name: tor
     environment:
       # Set required variables
-      - OR_PORT=65535
-      - PT_PORT=65534
+      - OR_PORT=65533
+      - PT_PORT=65532
       - EMAIL=john.doe@duck.com
       # If you want, you could change the nickname of your bridge
       #NICKNAME=DockerObfs4Bridge
