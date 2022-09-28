@@ -33,8 +33,8 @@ services:
     volumes:
       - data:/var/lib/tor
     ports:
-      - 65535:65535
-      - 65534:65534
+      - 65533:65533
+      - 65532:65532
     restart: unless-stopped
 
 volumes:
