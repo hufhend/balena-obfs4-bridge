@@ -1,6 +1,6 @@
 name: torproject
 type: sw.application
-description: Create a tor bridge from a small Raspberry Pi (v1) using the Balena cloud, creating a free Internet with very low electricity costs.
+description: Build a tor bridge from a small Raspberry Pi (v1) using the Balena cloud, create a free Internet with very low electricity costs.
 assets:
   repository:
     type: blob.asset
