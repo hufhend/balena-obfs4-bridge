@@ -1,0 +1,23 @@
+name: torproject
+type: sw.application
+description: >-
+  Create a tor bridge from a small Raspberry Pi (v1) using the Balena cloud, 
+  creating a free Internet with very low electricity costs.
+assets:
+  repository:
+    type: blob.asset
+    data:
+      url: 'https://gitlab.torproject.org/hufhendr/balena-obfs4-bridge"
+  logo:
+    type: blob.asset
+    data:
+      url: >-
+        https://gitlab.torproject.org/uploads/-/system/project/avatar/1694/tor-in-balena.png?width=1
+data:
+  applicationEnvironmentVariables:
+    - TZ: Europe/Prague
+  defaultDeviceType: raspberry-pi
+  supportedDeviceTypes:
+    - raspberry-pi
+    - orange-pi-one
+version: 0.4.5
