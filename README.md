@@ -4,7 +4,7 @@ Create a tor bridge from a small Raspberry Pi using the Balena cloud, creating a
 
 ## Getting started
 
-The most important thing is to provide access from the Internet to the Raspberry Pi on UDP ports 65533 and 65532, see [docker-compose.yml](docker-compose.yml) This is done differently on different routers, for Mikrotik for example as follows:
+The most important thing is to provide access from the Internet to the Raspberry Pi on TCP ports 65533 and 65532, see [docker-compose.yml](docker-compose.yml) This is done differently on different routers, for Mikrotik for example as follows:
 
 ```
 /ip firewall nat
