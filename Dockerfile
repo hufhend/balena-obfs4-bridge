@@ -1,6 +1,6 @@
 # Base docker image
 # If you want to upgrade, add new sha from debian:stable-slim arm/v5
-FROM debian:stable-slim@sha256:b7a04c1b286f32f9a5fa1f4c665975edc3021dac97f421f1665d51c82f900e68
+FROM debian:stable-slim@sha256:073a243a7151a6204a256f4d15f0d20cb0f876382f10f2dcf1a1df48a0a38890
 
 LABEL maintainer="Philipp Winter <phw@torproject.org>"
 
