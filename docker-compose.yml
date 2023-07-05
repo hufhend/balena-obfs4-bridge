@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   obfs4-bridge:
-    platform: linux/arm/v7
+    platform: linux/arm/v6
     build:
       context: .
       dockerfile: Dockerfile    
