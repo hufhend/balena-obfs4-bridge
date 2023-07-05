@@ -1,15 +1,15 @@
 version: "2.4"
 services:
   obfs4-bridge:
-    platform: linux/arm/v6
+    platform: linux/arm/v7
     build:
       context: .
       dockerfile: Dockerfile    
     container_name: tor
     environment:
       # Set required variables
-      - OR_PORT=65533
-      - PT_PORT=65532
+      - OR_PORT=65535
+      - PT_PORT=65534
       - EMAIL=john.doe@duck.com
       # If you want, you could change the nickname of your bridge
       #NICKNAME=DockerObfs4Bridge
@@ -33,8 +33,8 @@ services:
     volumes:
       - data:/var/lib/tor
     ports:
-      - 65533:65533
-      - 65532:65532
+      - 65535:65535
+      - 65534:65534
     restart: unless-stopped
 
 volumes:
