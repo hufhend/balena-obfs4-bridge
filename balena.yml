@@ -17,4 +17,4 @@ data:
   supportedDeviceTypes:
     - raspberry-pi
     - orange-pi-one
-version: 0.4.5
+version: 0.4.7
