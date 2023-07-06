@@ -43,9 +43,8 @@ ServerTransportListenAddr obfs4 0.0.0.0:${PT_PORT}
 # The variable "EMAIL" is replaced with the operator's email address.
 ContactInfo ${EMAIL}
 
-MetricsPort 0.0.0.0:9035
-MetricsPortPolicy accept 192.168.2.3
-MetricsPortPolicy accept 192.168.2.50
+MetricsPort 127.0.0.1:9035
+MetricsPortPolicy accept 127.0.0.1
 
 $ADDITIONAL_VARIABLES
 
