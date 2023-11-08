@@ -1,6 +1,16 @@
 name: torproject
 type: sw.application
 description: Build a tor bridge from a small Raspberry Pi (v1) using the Balena cloud, create a free Internet with very low electricity costs.
+post-provisioning: >-
+  ## Usage instructions
+
+  The most important thing is to provide access from the Internet to the Raspberry Pi on TCP ports 65533 and 65532,
+  see docker-compose.yml This is done differently on different routers, for Mikrotik for example as follows:
+  
+  `/ip firewall nat`
+  `add action=dst-nat chain=dstnat comment="Tor to Raspberry" dst-port=65533 in-interface-list=WAN protocol=tcp to-addresses=192.168.77.252 to-ports=65533`
+  `add action=dst-nat chain=dstnat dst-port=65532 in-interface-list=WAN protocol=tcp to-addresses=192.168.77.252 to-ports=65532`
+
 assets:
   repository:
     type: blob.asset
@@ -17,4 +27,4 @@ data:
   supportedDeviceTypes:
     - raspberry-pi
     - orange-pi-one
-version: 0.4.5
+version: 0.4.7
