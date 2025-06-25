@@ -16,7 +16,7 @@ add action=dst-nat chain=dstnat dst-port=65532 in-interface-list=WAN protocol=tc
 
 Running this project is as simple as deploying it to a balenaCloud application. You can do it in just one click by using the button below:
 
-[![deploy button](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://gitlab.torproject.org/hufhendr/balena-obfs4-bridge&defaultDeviceType=raspberry-pi)
+[![deploy button](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/hufhend/balena-obfs4-bridge)
 
 ## Highlights
 The setup is pre-designed for Broadband, it assumes a consumption of around 3Mbps, a volume that no one should miss on either the download or upload side. In practice, there is no problem watching high-speed streams with this at the same time. However, you want to test it individually and adjust the speed if necessary.
