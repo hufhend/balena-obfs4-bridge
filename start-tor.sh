@@ -16,7 +16,7 @@ then
     for V in $(env | grep "^$ADDITIONAL_VARIABLES_PREFIX"); do
         VKEY_ORG="$(echo $V | cut -d '=' -f1)"
         VKEY="${VKEY_ORG#$ADDITIONAL_VARIABLES_PREFIX}"
-        VVALUE="$(echo $V | cut -d '=' -f2)"
+        VVALUE="${V#*=}"
         echo "Overriding '$VKEY' with value '$VVALUE'"
         ADDITIONAL_VARIABLES="$ADDITIONAL_VARIABLES"$'\n'"$VKEY $VVALUE"
     done
@@ -30,7 +30,7 @@ BridgeRelay 1
 Nickname ${NICK}
 Log notice file /var/log/tor/log
 Log notice stdout
-ServerTransportPlugin obfs4 exec /usr/bin/obfs4proxy
+ServerTransportPlugin obfs4 exec /usr/bin/lyrebird
 ExtORPort auto
 DataDirectory /var/lib/tor
 
@@ -44,7 +44,6 @@ ServerTransportListenAddr obfs4 0.0.0.0:${PT_PORT}
 ContactInfo ${EMAIL}
 
 $ADDITIONAL_VARIABLES
-
 EOF
 
 echo "Starting tor."

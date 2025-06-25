@@ -1,11 +1,10 @@
 version: "2.4"
 services:
   obfs4-bridge:
-    platform: linux/arm/v5
-    build:
-      context: .
-      dockerfile: Dockerfile    
+    image: thetorproject/obfs4-bridge:latest
     container_name: tor
+    networks:
+      - obfs4_bridge_external_network
     environment:
       # Set required variables
       - OR_PORT=65533
@@ -40,3 +39,7 @@ services:
 volumes:
   data:
     name: tor-datadir
+
+networks:
+  obfs4_bridge_external_network:
+

@@ -1,44 +1,45 @@
+# build lyrebird
+FROM golang as builder
+
+RUN git clone https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird /lyrebird
+RUN cd /lyrebird && make build
+
 # Base docker image
-# If you want to upgrade, add new sha from debian:stable-slim arm/v5
-FROM debian:stable-slim@sha256:2b9419af564053bc00da403fa8b5d712165353e67e16e4135c6ed0dda58ebc27
+FROM debian:stable-slim
 
-LABEL maintainer="Philipp Winter <phw@torproject.org>"
+# Set to 101 for backward compatibility
+ARG UID=101
+ARG GID=101
 
-# Install dependencies to add Tor's repository.
-RUN apt-get update && apt-get install -y \
-    curl \
-    gpg \
-    gpg-agent \
+LABEL maintainer="meskio <meskio@torproject.org>"
+
+RUN groupadd -g $GID debian-tor
+RUN useradd -m -u $UID -g $GID -s /bin/false -d /var/lib/tor debian-tor
+
+# Use Debian backports instead of db.tpo, since db.tpo doesn't yet support armv7 arch
+RUN printf "deb http://deb.debian.org/debian stable-backports main\n" >> /etc/apt/sources.list.d/backports.list
+RUN apt-get update && apt-get install -y -t stable-backports \
     ca-certificates \
     libcap2-bin \
-    --no-install-recommends
-
-# See: <https://2019.www.torproject.org/docs/debian.html.en>
-RUN curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
-RUN gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
-
-RUN printf "deb https://deb.torproject.org/torproject.org bullseye main\n" >> /etc/apt/sources.list.d/tor.list
-
-# Install remaining dependencies.
-RUN apt-get update && apt-get install -y \
     tor \
     tor-geoipdb \
-    obfs4proxy \
-    --no-install-recommends
+    --no-install-recommends && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Allow obfs4proxy to bind to ports < 1024.
-RUN setcap cap_net_bind_service=+ep /usr/bin/obfs4proxy
+COPY --from=builder /lyrebird/lyrebird /usr/bin/lyrebird
+# Allow lyrebird to bind to ports < 1024.
+RUN setcap cap_net_bind_service=+ep /usr/bin/lyrebird
 
 # Our torrc is generated at run-time by the script start-tor.sh.
 RUN rm /etc/tor/torrc
 RUN chown debian-tor:debian-tor /etc/tor
 RUN chown debian-tor:debian-tor /var/log/tor
 
-COPY get-bridge-line /usr/local/bin
-RUN chmod 0755 /usr/local/bin/get-bridge-line
-
 COPY start-tor.sh /usr/local/bin
 RUN chmod 0755 /usr/local/bin/start-tor.sh
+
+COPY get-bridge-line /usr/local/bin
+RUN chmod 0755 /usr/local/bin/get-bridge-line
 
 USER debian-tor
 
