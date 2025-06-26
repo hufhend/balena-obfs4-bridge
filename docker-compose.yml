@@ -3,8 +3,6 @@ services:
   obfs4-bridge:
     image: thetorproject/obfs4-bridge:latest
     container_name: tor
-    networks:
-      - obfs4_bridge_external_network
     environment:
       # Set required variables
       - OR_PORT=65533
@@ -28,7 +26,7 @@ services:
       # To specify an exit node, if you know what you're doing
       # - OBFS4V_ExitNodes="{mc},{sg},{ro},{ch},{dk},{cl} StrictNodes 1"
       # Never use these exit nodes
-      # - OBFS4V_ExcludeExitNodes="{us}"
+      - OBFS4V_ExcludeExitNodes="{us}"
     volumes:
       - data:/var/lib/tor
     ports:
@@ -39,7 +37,3 @@ services:
 volumes:
   data:
     name: tor-datadir
-
-networks:
-  obfs4_bridge_external_network:
-
